@@ -2,10 +2,8 @@
   "name": "preact-cap",
   "version": "0.0.1",
   "scripts": {
-    "start": "poi --serve",
-    "build": "poi --prod",
+    "build": "tsc",
     "test": "jest",
-    "typecheck": "tsc --noEmit",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
   },
   "peerDependencies": {
@@ -14,7 +12,6 @@
   "devDependencies": {
     "@types/jest": "^24.0.14",
     "@types/node": "^12.0.4",
-    "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "eslint": "^5.16.0",
@@ -24,7 +21,6 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
     "jest": "^24.8.0",
-    "poi": "^12.6.10",
     "preact": "^10.0.0-beta.3",
     "prettier": "^1.17.1",
     "typescript": ">=3.4.5 <3.5.0"
