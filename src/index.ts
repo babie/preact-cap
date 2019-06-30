@@ -59,21 +59,23 @@ const nodeToDOM = (node: OthersVNode): HTMLElement => {
 }
 
 export const updateOthers = (nodes: OthersVNode[]): void => {
-  const oldTags = Array.from(document.head.querySelectorAll('.preact-cap'))
-  const newTags = nodes.map(nodeToDOM).filter((el): boolean => {
-    for (const [i, v] of oldTags.entries()) {
+  const tagsForRemove = Array.from(
+    document.head.querySelectorAll('.preact-cap')
+  )
+  const tagsForAppend = nodes.map(nodeToDOM).filter((el): boolean => {
+    for (const [i, v] of tagsForRemove.entries()) {
       if (el.isEqualNode(v)) {
         // keep
-        oldTags.splice(i, 1)
+        tagsForRemove.splice(i, 1)
         return false
       }
     }
     return true
   })
-  oldTags.forEach((el): void => {
+  tagsForRemove.forEach((el): void => {
     document.head.removeChild(el)
   })
-  newTags.forEach((el): void => {
+  tagsForAppend.forEach((el): void => {
     document.head.appendChild(el)
   })
 }
