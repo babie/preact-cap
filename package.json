@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -13,10 +15,16 @@
     "preact": "*"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.14",
     "@types/node": "^12.0.4",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
+    "babel-jest": "^24.8.0",
+    "core-js": "^3.1.4",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-jest": "^22.6.4",
