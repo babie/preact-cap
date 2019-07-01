@@ -47,6 +47,7 @@ const nodeToDOM = (node: OthersVNode): HTMLElement => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const [key, value] of Object.entries<any>(node.props)) {
       if (key === 'dangerouslySetInnerHTML') continue
+      if (key === 'children') continue
       el.setAttribute(attributeNames[key] || key.toLowerCase(), value)
     }
     if (node.props.dangerouslySetInnerHTML) {
@@ -58,7 +59,7 @@ const nodeToDOM = (node: OthersVNode): HTMLElement => {
   return el
 }
 
-export const updateOthers = (nodes: OthersVNode[]): void => {
+const updateOthers = (nodes: OthersVNode[]): void => {
   const tagsForRemove = Array.from(
     document.head.querySelectorAll('.preact-cap')
   )
@@ -80,11 +81,11 @@ export const updateOthers = (nodes: OthersVNode[]): void => {
   })
 }
 
-export const updateTitle = (nodes: TitleVNode[]): void => {
+const updateTitle = (nodes: TitleVNode[]): void => {
   document.title = nodes.map((node): string => node.props.children).join('')
 }
 
-export const updateHead = (nodes: preact.VNode[]): void => {
+const updateHead = (nodes: preact.VNode[]): void => {
   updateTitle(nodes.filter((node): node is TitleVNode => isTitleVNode(node)))
   updateOthers(nodes.filter((node): node is OthersVNode => isOthersVNode(node)))
 }
@@ -151,7 +152,7 @@ const getClassName = (node: any): string => {
   return ''
 }
 
-export const reduceNodes = (caps: preact.Component[]): preact.VNode[] => {
+const reduceNodes = (caps: preact.Component[]): preact.VNode[] => {
   return caps
     .map<preact.ComponentChild>(
       (cap): preact.ComponentChildren => cap.props.children
@@ -168,7 +169,7 @@ export const reduceNodes = (caps: preact.Component[]): preact.VNode[] => {
 }
 
 const browser = typeof window !== 'undefined'
-export const update = (): void => {
+const update = (): void => {
   if (browser) {
     const nodes = reduceNodes(caps)
     updateHead(nodes)
