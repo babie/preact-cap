@@ -38,6 +38,17 @@ describe('preact-cap', (): void => {
     })
   })
 
+  describe('updateTitle()', (): void => {
+    const updateTitle = myModule.__get__('updateTitle')
+
+    it('when nodes has 1 title', (): void => {
+      const nodes = [<title key="title1">Title1</title>]
+      updateTitle(nodes)
+
+      expect(document.title).toStrictEqual('Title1')
+    })
+  })
+
   describe('Cap.rewind()', (): void => {
     it('when no head tags', (): void => {
       expect(Cap.rewind()).toStrictEqual([])
