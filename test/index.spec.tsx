@@ -47,6 +47,17 @@ describe('preact-cap', (): void => {
 
       expect(document.title).toStrictEqual('Title1')
     })
+
+    it('when nodes has 3 titles', (): void => {
+      const nodes = [
+        <title key="title1">Title1</title>,
+        <title key="title2">Title2</title>,
+        <title key="title3">Title3</title>
+      ]
+      updateTitle(nodes)
+
+      expect(document.title).toStrictEqual('Title1Title2Title3')
+    })
   })
 
   describe('Cap.rewind()', (): void => {
