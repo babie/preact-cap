@@ -10,15 +10,34 @@ describe('preact-cap', (): void => {
   myModule.__set__('document', jsdom.window.document.defaultView.document)
   const nodeToDOM = myModule.__get__('nodeToDOM')
 
-  it('nodeToDOM()', (): void => {
-    const node = <meta name="description">Meta</meta>
-    const el = document.createElement('meta')
-    el.setAttribute('name', 'description')
-    el.textContent = 'Meta'
-    expect(nodeToDOM(node)).toStrictEqual(el)
+  describe('nodeToDOM()', (): void => {
+    it('when node has children', (): void => {
+      const node = <meta name="description">Meta</meta>
+      const el = document.createElement('meta')
+      el.setAttribute('name', 'description')
+      el.textContent = 'Meta'
+
+      expect(nodeToDOM(node)).toStrictEqual(el)
+    })
+
+    it('when node has dengerouslySetInnerHTML', (): void => {
+      const node = (
+        <meta
+          name="description"
+          dangerouslySetInnerHTML={{ __html: '<span>Span</span>' }}
+        />
+      )
+      const el = document.createElement('meta')
+      el.setAttribute('name', 'description')
+      el.innerHTML = '<span>Span</span>'
+
+      expect(nodeToDOM(node)).toStrictEqual(el)
+    })
   })
 
-  it('Cap.rewind()', (): void => {
-    expect(Cap.rewind()).toStrictEqual([])
+  describe('Cap.rewind()', (): void => {
+    it('when no head tags', (): void => {
+      expect(Cap.rewind()).toStrictEqual([])
+    })
   })
 })
