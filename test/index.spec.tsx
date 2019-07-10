@@ -7,8 +7,10 @@ declare var jsdom: JSDOM
 
 describe('preact-cap', (): void => {
   const myModule = rewire('../dist')
-  beforeEach((): void => {
-    myModule.__set__('document', jsdom.window.document.defaultView.document)
+  myModule.__set__('document', jsdom.window.document.defaultView.document)
+
+  afterEach((): void => {
+    document.getElementsByTagName('html')[0].innerHTML = ''
   })
 
   describe('nodeToDOM()', (): void => {
