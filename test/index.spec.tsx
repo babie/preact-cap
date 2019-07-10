@@ -60,6 +60,62 @@ describe('preact-cap', (): void => {
     })
   })
 
+  describe('updateOthers', (): void => {
+    const updateOthers = myModule.__get__('updateOthers')
+
+    it('when create', (): void => {
+      const nodes = [
+        <meta
+          key="meta1"
+          className="preact-cap"
+          content="width=device-width,initial-scale=1"
+          name="viewport"
+        />,
+        <base
+          key="base1"
+          className="preact-cap"
+          href="http://localhost/"
+          target="_self"
+        />,
+        <link
+          key="link1"
+          className="preact-cap"
+          href="main.css"
+          rel="stylesheet"
+        />,
+        <style key="style1" className="preact-cap">
+          {'p { color: red; }'}
+        </style>,
+        <script key="script1" className="preact-cap" src="main.js" defer />
+      ]
+      updateOthers(nodes)
+      const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+
+      const meta = document.createElement('meta')
+      meta.setAttribute('class', 'preact-cap')
+      meta.setAttribute('content', 'width=device-width,initial-scale=1')
+      meta.setAttribute('name', 'viewport')
+      const base = document.createElement('base')
+      base.setAttribute('class', 'preact-cap')
+      base.setAttribute('href', 'http://localhost/')
+      base.setAttribute('target', '_self')
+      const link = document.createElement('link')
+      link.setAttribute('class', 'preact-cap')
+      link.setAttribute('href', 'main.css')
+      link.setAttribute('rel', 'stylesheet')
+      const style = document.createElement('style')
+      style.setAttribute('class', 'preact-cap')
+      style.textContent = 'p { color: red; }'
+      const script = document.createElement('script')
+      script.setAttribute('class', 'preact-cap')
+      script.setAttribute('defer', 'true')
+      script.setAttribute('src', 'main.js')
+      const elements = [meta, base, link, style, script]
+
+      expect(tags).toStrictEqual(elements)
+    })
+  })
+
   describe('Cap.rewind()', (): void => {
     it('when no head tags', (): void => {
       expect(Cap.rewind()).toStrictEqual([])
