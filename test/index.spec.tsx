@@ -64,32 +64,32 @@ describe('preact-cap', (): void => {
 
   describe('updateOthers', (): void => {
     const updateOthers = myModule.__get__('updateOthers')
+    const nodes = [
+      <meta
+        key="meta1"
+        className="preact-cap"
+        content="width=device-width,initial-scale=1"
+        name="viewport"
+      />,
+      <base
+        key="base1"
+        className="preact-cap"
+        href="http://localhost/"
+        target="_self"
+      />,
+      <link
+        key="link1"
+        className="preact-cap"
+        href="main.css"
+        rel="stylesheet"
+      />,
+      <style key="style1" className="preact-cap">
+        {'p { color: red; }'}
+      </style>,
+      <script key="script1" className="preact-cap" src="main.js" defer />
+    ]
 
     it('when create', (): void => {
-      const nodes = [
-        <meta
-          key="meta1"
-          className="preact-cap"
-          content="width=device-width,initial-scale=1"
-          name="viewport"
-        />,
-        <base
-          key="base1"
-          className="preact-cap"
-          href="http://localhost/"
-          target="_self"
-        />,
-        <link
-          key="link1"
-          className="preact-cap"
-          href="main.css"
-          rel="stylesheet"
-        />,
-        <style key="style1" className="preact-cap">
-          {'p { color: red; }'}
-        </style>,
-        <script key="script1" className="preact-cap" src="main.js" defer />
-      ]
       updateOthers(nodes)
       const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
 
@@ -115,6 +115,14 @@ describe('preact-cap', (): void => {
       const elements = [meta, base, link, style, script]
 
       expect(tags).toStrictEqual(elements)
+    })
+
+    it('when remove', (): void => {
+      updateOthers(nodes)
+      updateOthers([])
+      const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+
+      expect(tags).toStrictEqual([])
     })
   })
 
