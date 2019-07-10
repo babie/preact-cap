@@ -88,41 +88,65 @@ describe('preact-cap', (): void => {
       </style>,
       <script key="script1" className="preact-cap" src="main.js" defer />
     ]
+    const meta = document.createElement('meta')
+    meta.setAttribute('class', 'preact-cap')
+    meta.setAttribute('content', 'width=device-width,initial-scale=1')
+    meta.setAttribute('name', 'viewport')
+    const base = document.createElement('base')
+    base.setAttribute('class', 'preact-cap')
+    base.setAttribute('href', 'http://localhost/')
+    base.setAttribute('target', '_self')
+    const link = document.createElement('link')
+    link.setAttribute('class', 'preact-cap')
+    link.setAttribute('href', 'main.css')
+    link.setAttribute('rel', 'stylesheet')
+    const style = document.createElement('style')
+    style.setAttribute('class', 'preact-cap')
+    style.textContent = 'p { color: red; }'
+    const script = document.createElement('script')
+    script.setAttribute('class', 'preact-cap')
+    script.setAttribute('defer', 'true')
+    script.setAttribute('src', 'main.js')
+    const elements = [meta, base, link, style, script]
+
+    beforeEach((): void => {
+      updateOthers(nodes)
+    })
 
     it('when create', (): void => {
-      updateOthers(nodes)
       const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
-
-      const meta = document.createElement('meta')
-      meta.setAttribute('class', 'preact-cap')
-      meta.setAttribute('content', 'width=device-width,initial-scale=1')
-      meta.setAttribute('name', 'viewport')
-      const base = document.createElement('base')
-      base.setAttribute('class', 'preact-cap')
-      base.setAttribute('href', 'http://localhost/')
-      base.setAttribute('target', '_self')
-      const link = document.createElement('link')
-      link.setAttribute('class', 'preact-cap')
-      link.setAttribute('href', 'main.css')
-      link.setAttribute('rel', 'stylesheet')
-      const style = document.createElement('style')
-      style.setAttribute('class', 'preact-cap')
-      style.textContent = 'p { color: red; }'
-      const script = document.createElement('script')
-      script.setAttribute('class', 'preact-cap')
-      script.setAttribute('defer', 'true')
-      script.setAttribute('src', 'main.js')
-      const elements = [meta, base, link, style, script]
 
       expect(tags).toStrictEqual(elements)
     })
 
     it('when remove', (): void => {
-      updateOthers(nodes)
       updateOthers([])
       const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
 
       expect(tags).toStrictEqual([])
+    })
+
+    it('when update', (): void => {
+      const newNodes = nodes.slice(0, nodes.length)
+      newNodes[2] = (
+        <link
+          key="link1"
+          className="preact-cap"
+          href="another.css"
+          rel="stylesheet"
+        />
+      )
+      updateOthers(newNodes)
+      const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+
+      const newElements = elements.slice(0, elements.length)
+      const newLink = document.createElement('link')
+      newLink.setAttribute('class', 'preact-cap')
+      newLink.setAttribute('href', 'another.css')
+      newLink.setAttribute('rel', 'stylesheet')
+      newElements[2] = newLink
+
+      expect(tags.sort()).toStrictEqual(newElements.sort())
     })
   })
 
