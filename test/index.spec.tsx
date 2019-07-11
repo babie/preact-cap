@@ -164,6 +164,14 @@ describe('preact-cap', (): void => {
 
       expect(tags).toStrictEqual(elements)
     })
+
+    it('when removed', (): void => {
+      updateHead(nodes)
+      updateHead([])
+      const tags = Array.from(document.head.children)
+
+      expect(tags).toStrictEqual([title])
+    })
   })
 
   describe('Cap.rewind()', (): void => {

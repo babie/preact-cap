@@ -82,7 +82,9 @@ const updateOthers = (nodes: OthersVNode[]): void => {
 }
 
 const updateTitle = (nodes: TitleVNode[]): void => {
-  document.title = nodes.map((node): string => node.props.children).join('')
+  if (nodes.length > 0) {
+    document.title = nodes.map((node): string => node.props.children).join('')
+  }
 }
 
 const updateHead = (nodes: preact.VNode[]): void => {
