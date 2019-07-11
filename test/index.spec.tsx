@@ -116,17 +116,15 @@ describe('preact-cap', (): void => {
       const othersNodes = nodes.slice(1, nodes.length)
       const othersElements = elements.slice(1, elements.length)
 
-      beforeEach((): void => {
-        updateOthers(othersNodes)
-      })
-
       it('when created', (): void => {
+        updateOthers(othersNodes)
         const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
 
         expect(tags).toStrictEqual(othersElements)
       })
 
       it('when removed', (): void => {
+        updateOthers(othersNodes)
         updateOthers([])
         const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
 
@@ -134,6 +132,7 @@ describe('preact-cap', (): void => {
       })
 
       it('when updated', (): void => {
+        updateOthers(othersNodes)
         const newNodes = othersNodes.slice(0, nodes.length)
         newNodes[2] = (
           <link
