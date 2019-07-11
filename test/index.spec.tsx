@@ -171,6 +171,27 @@ describe('preact-cap', (): void => {
 
       expect(tags).toStrictEqual([title])
     })
+
+    it('when updated', (): void => {
+      updateHead(nodes)
+      const newNodes = nodes.slice(0, nodes.length)
+      newNodes[0] = <title>Updated Title</title>
+      newNodes[5] = <script className="preact-cap" src="another.js" defer />
+      updateHead(newNodes)
+      const tags = Array.from(document.head.children)
+
+      const newElements = elements.slice(0, elements.length)
+      const newTitle = document.createElement('title')
+      newTitle.textContent = 'Updated Title'
+      const newScript = document.createElement('script')
+      newScript.setAttribute('class', 'preact-cap')
+      newScript.setAttribute('src', 'another.js')
+      newScript.setAttribute('defer', 'true')
+      newElements[0] = newTitle
+      newElements[5] = newScript
+
+      expect(tags.sort()).toStrictEqual(newElements.sort())
+    })
   })
 
   describe('Cap.rewind()', (): void => {
