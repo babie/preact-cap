@@ -18,11 +18,13 @@ describe('preact-cap', (): void => {
 
     it('when node has children', (): void => {
       const node = <meta name="description">Meta</meta>
-      const el = document.createElement('meta')
-      el.setAttribute('name', 'description')
-      el.textContent = 'Meta'
+      const actual = nodeToDOM(node)
 
-      expect(nodeToDOM(node)).toStrictEqual(el)
+      const expected = document.createElement('meta')
+      expected.setAttribute('name', 'description')
+      expected.textContent = 'Meta'
+
+      expect(actual).toStrictEqual(expected)
     })
 
     it('when node has dengerouslySetInnerHTML', (): void => {
@@ -32,11 +34,13 @@ describe('preact-cap', (): void => {
           dangerouslySetInnerHTML={{ __html: '<span>Span</span>' }}
         />
       )
-      const el = document.createElement('meta')
-      el.setAttribute('name', 'description')
-      el.innerHTML = '<span>Span</span>'
+      const actual = nodeToDOM(node)
 
-      expect(nodeToDOM(node)).toStrictEqual(el)
+      const expected = document.createElement('meta')
+      expected.setAttribute('name', 'description')
+      expected.innerHTML = '<span>Span</span>'
+
+      expect(actual).toStrictEqual(expected)
     })
   })
 
@@ -118,17 +122,17 @@ describe('preact-cap', (): void => {
 
       it('when created', (): void => {
         updateOthers(othersNodes)
-        const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+        const actual = Array.from(document.head.querySelectorAll('.preact-cap'))
 
-        expect(tags).toStrictEqual(othersElements)
+        expect(actual).toStrictEqual(othersElements)
       })
 
       it('when removed', (): void => {
         updateOthers(othersNodes)
         updateOthers([])
-        const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+        const actual = Array.from(document.head.querySelectorAll('.preact-cap'))
 
-        expect(tags).toStrictEqual([])
+        expect(actual).toStrictEqual([])
       })
 
       it('when updated', (): void => {
@@ -143,33 +147,33 @@ describe('preact-cap', (): void => {
           />
         )
         updateOthers(newNodes)
-        const tags = Array.from(document.head.querySelectorAll('.preact-cap'))
+        const actual = Array.from(document.head.querySelectorAll('.preact-cap'))
 
-        const newElements = othersElements.slice(0, elements.length)
+        const expected = othersElements.slice(0, elements.length)
         const newLink = document.createElement('link')
         newLink.setAttribute('class', 'preact-cap')
         newLink.setAttribute('href', 'another.css')
         newLink.setAttribute('rel', 'stylesheet')
-        newElements[2] = newLink
+        expected[2] = newLink
 
-        expect(tags.sort()).toStrictEqual(newElements.sort())
+        expect(actual.sort()).toStrictEqual(expected.sort())
       })
     })
 
     const updateHead = myModule.__get__('updateHead')
     it('when created', (): void => {
       updateHead(nodes)
-      const tags = Array.from(document.head.children)
+      const actual = Array.from(document.head.children)
 
-      expect(tags).toStrictEqual(elements)
+      expect(actual).toStrictEqual(elements)
     })
 
     it('when removed', (): void => {
       updateHead(nodes)
       updateHead([])
-      const tags = Array.from(document.head.children)
+      const actual = Array.from(document.head.children)
 
-      expect(tags).toStrictEqual([title])
+      expect(actual).toStrictEqual([title])
     })
 
     it('when updated', (): void => {
@@ -178,19 +182,19 @@ describe('preact-cap', (): void => {
       newNodes[0] = <title>Updated Title</title>
       newNodes[5] = <script className="preact-cap" src="another.js" defer />
       updateHead(newNodes)
-      const tags = Array.from(document.head.children)
+      const actual = Array.from(document.head.children)
 
-      const newElements = elements.slice(0, elements.length)
+      const expected = elements.slice(0, elements.length)
       const newTitle = document.createElement('title')
       newTitle.textContent = 'Updated Title'
       const newScript = document.createElement('script')
       newScript.setAttribute('class', 'preact-cap')
       newScript.setAttribute('src', 'another.js')
       newScript.setAttribute('defer', 'true')
-      newElements[0] = newTitle
-      newElements[5] = newScript
+      expected[0] = newTitle
+      expected[5] = newScript
 
-      expect(tags.sort()).toStrictEqual(newElements.sort())
+      expect(actual.sort()).toStrictEqual(expected.sort())
     })
   })
 
@@ -234,9 +238,9 @@ describe('preact-cap', (): void => {
         />,
         <base key="base" href="http://localhost/duplicated/" target="_self" />
       ]
-      const recieved = expected.concat(duplicated).filter(unique())
+      const actual = expected.concat(duplicated).filter(unique())
 
-      expect(recieved).toStrictEqual(expected)
+      expect(actual).toStrictEqual(expected)
     })
   })
 
