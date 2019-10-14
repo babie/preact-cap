@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { h, VNode } from 'preact'
 import { Cap } from '../src'
 import rewire from 'rewire'
 import { JSDOM } from 'jsdom'
@@ -267,6 +267,81 @@ describe('preact-cap', (): void => {
       const expected = ''
 
       expect(actual).toStrictEqual(expected)
+    })
+  })
+
+  describe('reduceNodes()', (): void => {
+    const reduceNodes = myModule.__get__('reduceNodes')
+
+    it('when no head tags', (): void => {
+      const compare = (a: VNode, b: VNode): -1 | 0 | 1 => {
+        a = a.key.toString().toLowerCase()
+        b = b.key.toString().toLowerCase()
+
+        if (a < b) {
+          return -1
+        } else if (a > b) {
+          return 1
+        }
+        return 0
+      }
+      const expected = [
+        <title key="title" className="preact-cap">
+          Default Title
+        </title>,
+        <meta key="charSet" charSet="utf-8" className="preact-cap" />,
+        <meta
+          key="name"
+          name="description"
+          content="this is a description"
+          className="preact-cap"
+        />,
+        <meta
+          key="http-equiv"
+          httpEquiv="content-type"
+          content="text/html; charset=utf-8"
+          className="preact-cap"
+        />,
+        <meta
+          key="itemprop"
+          itemProp="description"
+          content="this is a description"
+          className="preact-cap"
+        />,
+        <base
+          key="base"
+          href="http://localhost/"
+          target="_self"
+          className="preact-cap"
+        />
+      ].sort(compare)
+
+      const cap1 = (
+        <Cap>
+          <meta key="charSet" charSet="utf-8" />
+          <meta
+            key="http-equiv"
+            httpEquiv="content-type"
+            content="text/html; charset=utf-8"
+          />
+          <base key="base" href="http://localhost/" target="_self" />
+        </Cap>
+      )
+      const cap2 = (
+        <Cap>
+          <title key="title">Default Title</title>
+          <meta key="name" name="description" content="this is a description" />
+          <meta
+            key="itemprop"
+            itemProp="description"
+            content="this is a description"
+          />
+        </Cap>
+      )
+      const caps = [cap1, cap2]
+      const actual = reduceNodes(caps).sort(compare)
+
+      expect(actual).toEqual(expected)
     })
   })
 
