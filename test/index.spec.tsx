@@ -200,25 +200,25 @@ describe('preact-cap', (): void => {
 
   describe('unique()', (): void => {
     const unique = myModule.__get__('unique')
+    const expected = [
+      <title key="title">Default Title</title>,
+      <meta key="charSet" charSet="utf-8" />,
+      <meta key="name" name="description" content="this is a description" />,
+      <meta
+        key="http-equiv"
+        httpEquiv="content-type"
+        content="text/html; charset=utf-8"
+      />,
+      <meta
+        key="itemprop"
+        itemProp="description"
+        content="this is a description"
+      />,
+      <base key="base" href="http://localhost/" target="_self" />
+    ]
 
     it('when duplicated', (): void => {
-      const expected = [
-        <title key="title">Default Title</title>,
-        <meta key="charSet" charSet="utf-8" />,
-        <meta key="name" name="description" content="this is a description" />,
-        <meta
-          key="http-equiv"
-          httpEquiv="content-type"
-          content="text/html; charset=utf-8"
-        />,
-        <meta
-          key="itemprop"
-          itemProp="description"
-          content="this is a description"
-        />,
-        <base key="base" href="http://localhost/" target="_self" />
-      ]
-      const duplicated = [
+      const duplicated = expected.concat([
         <title key="title">Duplicated Title</title>,
         <meta key="charSet" charSet="euc-jp" />,
         <meta
@@ -237,8 +237,14 @@ describe('preact-cap', (): void => {
           content="this is a duplicate description"
         />,
         <base key="base" href="http://localhost/duplicated/" target="_self" />
-      ]
-      const actual = expected.concat(duplicated).filter(unique())
+      ])
+      const actual = duplicated.filter(unique())
+
+      expect(actual).toStrictEqual(expected)
+    })
+
+    it('when unique originally', (): void => {
+      const actual = expected.concat()
 
       expect(actual).toStrictEqual(expected)
     })
