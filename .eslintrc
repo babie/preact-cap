@@ -19,8 +19,7 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "sourceType": "module",
-    "project": "./tsconfig.json"
+    "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "react", "jsx-a11y", "jest", "prettier"],
   "rules": {

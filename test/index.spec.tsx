@@ -3,7 +3,7 @@ import { Cap } from '../src'
 import rewire from 'rewire'
 import { JSDOM } from 'jsdom'
 
-declare var jsdom: JSDOM
+declare const jsdom: JSDOM
 
 describe('preact-cap', (): void => {
   const myModule = rewire('../dist')
