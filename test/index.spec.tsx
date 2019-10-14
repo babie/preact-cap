@@ -244,6 +244,26 @@ describe('preact-cap', (): void => {
     })
   })
 
+  describe('getClassName()', (): void => {
+    const getClassName = myModule.__get__('getClassName')
+
+    it('when has class', (): void => {
+      const node = <div className="foo bar"></div>
+      const actual = getClassName(node)
+      const expected = 'foo bar'
+
+      expect(actual).toStrictEqual(expected)
+    })
+
+    it('when has no class', (): void => {
+      const node = <div></div>
+      const actual = getClassName(node)
+      const expected = ''
+
+      expect(actual).toStrictEqual(expected)
+    })
+  })
+
   describe('Cap.rewind()', (): void => {
     it('when no head tags', (): void => {
       expect(Cap.rewind()).toStrictEqual([])
