@@ -1,5 +1,5 @@
 import { Component, cloneElement } from 'preact'
-
+import { render as renderToString } from 'preact-render-to-string'
 let caps: preact.Component[] = []
 
 type TitleVNodeType = 'title'
@@ -185,8 +185,18 @@ export class Cap extends Component {
     return nodes
   }
 
-  public componentDidMount(): void {
+  public static toString(): string {
+    return this.rewind()
+      .map(node => renderToString(node))
+      .join('')
+  }
+
+  constructor(props: {}) {
+    super(props)
     caps.push(this)
+  }
+
+  public componentDidMount(): void {
     update()
   }
 
@@ -206,3 +216,14 @@ export class Cap extends Component {
     return null
   }
 }
+/*
+// use custom hook with useReducer and useEffect
+export const Head = (props: VNode[]): VNode[] => {
+  return props
+}
+
+export const Cap = (props: VNode[]): null => {
+  props
+  return null
+}
+*/

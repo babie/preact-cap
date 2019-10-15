@@ -3,8 +3,8 @@ const presets = [
     '@babel/preset-env',
     { targets: { node: 'current' }, useBuiltIns: 'usage', corejs: 3 }
   ],
-  ['@babel/preset-typescript', { jsxPragma: 'h' }],
-  ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }]
+  ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }],
+  ['@babel/preset-typescript', { jsxPragma: 'h' }]
 ]
 const plugins = []
 
