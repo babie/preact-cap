@@ -6,4 +6,6 @@ app.get('*', (req, res) => {
   res.send(html({ url: req.url }))
 })
 
-app.listen(3000, () => console.log('Server listening on port 3000.'))
+app.listen(3000, () =>
+  console.log('Server listening on port 3000. Open http://localhost:3000/')
+)
