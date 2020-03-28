@@ -4,7 +4,8 @@ const presets = [
     { targets: { node: 'current' }, useBuiltIns: 'usage', corejs: 3 }
   ],
   ['@babel/preset-react', { pragma: 'h', pragmaFrag: 'Fragment' }],
-  ['@babel/preset-typescript', { jsxPragma: 'h' }]
+  ['@babel/preset-typescript', { jsxPragma: 'h' }],
+  'power-assert'
 ]
 const plugins = []
 
