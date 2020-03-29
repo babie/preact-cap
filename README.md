@@ -99,6 +99,11 @@ import { html } from './html'
 
 const app = express()
 
+app.get('index.js', (req, res) => {
+  res.set('Content-Type', 'text/javascript')
+  res.sendFile('./index.js')
+})
+
 app.get('*', (req, res) => {
   const doc = `<!doctype html>` + render(html({ url: req.url })).trim()
   res.send(doc)
