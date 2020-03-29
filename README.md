@@ -15,7 +15,7 @@ $ yarn add preact-cap
 ## Usage
 
 ```tsx
-import { h, Fragment, render } from 'preact'
+import { h, render } from 'preact'
 import { Cap } from 'preact-cap'
 
 export const App = () => {
@@ -76,7 +76,7 @@ export const html = ({ url: string }) => {
   return (
     <Html lang='en'>
       <Head>
-        <script />
+        <script src='./index.js' />
       </Head>
       <body>
         <div id='app'>
