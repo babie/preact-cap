@@ -14,24 +14,6 @@ $ yarn add preact-cap
 
 ## Usage
 
-```tsx
-import { h, render } from 'preact'
-import { Cap } from 'preact-cap'
-
-export const App = () => {
-  return (
-    <Cap>
-      <title>App</title>
-    </Cap>
-    <h1>Top Page</h1>
-  )
-}
-
-render(App, document.body)
-```
-
-## Server-Side Rendering
-
 `App.tsx`:
 ```tsx
 import { h } from 'preact'
@@ -46,6 +28,7 @@ export const Home = () => {
     </Cap>
     <h1>Welcome</h1>
     <Link href='/about'>About</Link>
+    <Link href='/ja'>Japanese</Link>
   )
 }
 
@@ -56,6 +39,18 @@ export const About = () => {
     </Cap>
     <h1>About</h1>
     <Link href='/'>Home</Link>
+    <Link href='/ja'>Japanese</Link>
+  )
+}
+
+export const Japanese = () => {
+  return (
+    <Cap lang='ja'>
+      <title>日本語</title>
+    </Cap>
+    <h1>日本語</h1>
+    <Link href='/'>Home</Link>
+    <Link href='/about'>About</Link>
   )
 }
 
@@ -64,50 +59,33 @@ export const App = ({ url: string }) => {
     <Router url={url}>
       <Home path='/' />
       <About path='/about' />
+      <Japanese path='/ja' />
     </Router>
   )
 }
 ```
 
-### with AppShell
+`title`, `meta`, `base`, `link`, `style`, `script` tags are supported.
 
-`index.html`:
 
-`html.ts`:
+## Server-Side Rendering
 
-`server.ts`:
+### Common
 
-### without AppShell
-
-`html.tsx`:
+`index.ts`:
 ```tsx
-import { h } from 'preact'
-import { Html, Head } from 'preact-cap'
-import { App } from './App.tsx'
+import { hydrate } from 'preact'
+import { App } from './App'
 
-export const html = ({ url: string }) => {
-  return (
-    <Html lang='en'>
-      <Head>
-        <script src='./index.js' />
-      </Head>
-      <body>
-        <div id='app'>
-          <App url={url}/>
-        </div>
-        <script language='javascript'>
-          { `hydrate(App({ url }), document.getElementById('app'))` }
-        </script>
-      </body>
-    </Html>
-  )
+const app = document.getElementById('app')
+if (app) {
+  hydrate(App, app)
 }
 ```
 
 `server.ts`:
 ```ts
 import express from 'express'
-import render from 'preact-render-to-string'
 import { html } from './html'
 
 const app = express()
@@ -115,11 +93,74 @@ const app = express()
 app.use(express.static('public'))
 
 app.get('*', (req, res) => {
-  const doc = `<!doctype html>` + render(html({ url: req.url })).trim()
+  const doc = html({ url: req.url })
   res.send(doc)
 })
 
-app.listen(3000, () =>
-  console.log('Server listening on port 3000. Open http://localhost:3000/')
-)
+app.listen(3000)
+```
+
+### with AppShell
+
+`index.html`:
+```html
+<!doctype html>
+<html lang='en'>
+  <head>
+    <script src='./index.js' defer />
+  </head>
+  <body>
+    <div id='app'>Please Enable JavaScript.</div>
+  </body>
+</html>
+```
+
+`html.ts`:
+```ts
+import { h } from 'preact'
+import { render } from 'preact-cap'
+import { App } from './App.tsx'
+
+export const html = ({ url: string }) => {
+  const { head, app } = render(App({ url }))
+  return `
+    <!doctype html>
+    <html lang='en'>
+      <head>
+        <script src='./index.js' defer />
+        ${ head }
+      </head>
+      <body>
+        <div id='app'>
+          ${ app }
+        </div>
+      </body>
+    </html>
+  `.trim()
+}
+```
+
+### without AppShell
+
+`html.tsx`:
+```tsx
+import { h } from 'preact'
+import render from 'preact-render-to-string'
+import { Html, Head } from 'preact-cap'
+import { App } from './App.tsx'
+
+export const html = ({ url: string }) => {
+  return '<!doctype html>' + render(
+    <Html lang='en'>
+      <Head>
+        <script src='./index.js' defer />
+      </Head>
+      <body>
+        <div id='app'>
+          <App url={url}/>
+        </div>
+      </body>
+    </Html>
+  ).trim()
+}
 ```
