@@ -96,7 +96,7 @@ export const html = ({ url: string }) => {
           <App url={url}/>
         </div>
         <script language='javascript'>
-          { "hydrate(App({ url }), document.getElementById('app')) }
+          { `hydrate(App({ url }), document.getElementById('app'))` }
         </script>
       </body>
     </Html>
