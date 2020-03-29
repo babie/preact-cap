@@ -1,6 +1,9 @@
 # preact-cap
 
-&lt;head> tags updater on [preact](https://github.com/preactjs/preact)
+&lt;head> tags updater on [preact](https://github.com/preactjs/preact).
+
+`head`'s `title`, `meta`, `base`, `link`, `style`, `script` tags and `html`'s `lang` attributes are supported.
+
 
 ## Install
 
@@ -65,12 +68,7 @@ export const App = ({ url: string }) => {
 }
 ```
 
-`title`, `meta`, `base`, `link`, `style`, `script` tags are supported.
-
-
 ## Server-Side Rendering
-
-### Common
 
 `index.ts`:
 ```tsx
