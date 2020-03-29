@@ -2,13 +2,17 @@
 
 &lt;head> tags updater on [preact](https://github.com/preactjs/preact)
 
-## Usage
+## Install
 
 ```shell
-$ npm install --save-dev preact-cap
-# or
-$ yarn add --dev preact-cap
+$ npm install preact-cap
 ```
+or
+```shell
+$ yarn add preact-cap
+```
+
+## Usage
 
 ```tsx
 import { h, Fragment, render } from 'preact'
