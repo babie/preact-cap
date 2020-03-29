@@ -8,6 +8,7 @@ Update head tags with JSX
 
 ### In Progress
 
+- [ ] Write README.md  
 
 ### Done
 
