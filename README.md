@@ -20,12 +20,10 @@ import { Cap } from 'preact-cap'
 
 export const App = () => {
   return (
-    <>
-      <Cap>
-        <title>App</title>
-      </Cap>
-      <h1>Top Page</h1>
-    </>
+    <Cap>
+      <title>App</title>
+    </Cap>
+    <h1>Top Page</h1>
   )
 }
 
