@@ -32,7 +32,7 @@ render(App, document.body)
 
 ## Server-Side Rendering
 
-`App.tsx`
+`App.tsx`:
 ```tsx
 import { h } from 'preact'
 import { Router } from 'preact-router'
@@ -69,7 +69,17 @@ export const App = ({ url: string }) => {
 }
 ```
 
-`html.tsx`
+### with AppShell
+
+`index.html`:
+
+`html.ts`:
+
+`server.ts`:
+
+### without AppShell
+
+`html.tsx`:
 ```tsx
 import { h } from 'preact'
 import { Html, Head } from 'preact-cap'
