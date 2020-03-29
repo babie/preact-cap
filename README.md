@@ -96,7 +96,7 @@ export const html = ({ url: string }) => {
           <App url={url}/>
         </div>
         <script language='javascript'>
-          hydrate(App({ url }), document.getElementById('app'))
+          { "hydrate(App({ url }), document.getElementById('app')) }
         </script>
       </body>
     </Html>
@@ -112,10 +112,7 @@ import { html } from './html'
 
 const app = express()
 
-app.get('index.js', (req, res) => {
-  res.set('Content-Type', 'text/javascript')
-  res.sendFile('./index.js')
-})
+app.use(express.static('public'))
 
 app.get('*', (req, res) => {
   const doc = `<!doctype html>` + render(html({ url: req.url })).trim()
