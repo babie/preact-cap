@@ -35,7 +35,8 @@ render(App, document.body)
 `App.tsx`
 ```tsx
 import { h } from 'preact'
-import Router from 'preact-router'
+import { Router } from 'preact-router'
+import { Link } from 'preact-router/match'
 import { Cap } from 'preact-cap'
 
 export const Home = () => {
@@ -44,6 +45,7 @@ export const Home = () => {
       <title>Home</title>
     </Cap>
     <h1>Welcome</h1>
+    <Link href='/about'>About</Link>
   )
 }
 
@@ -53,6 +55,7 @@ export const About = () => {
       <title>About</title>
     </Cap>
     <h1>About</h1>
+    <Link href='/'>Home</Link>
   )
 }
 
