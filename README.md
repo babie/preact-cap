@@ -19,41 +19,47 @@ $ yarn add preact-cap
 
 `App.tsx`:
 ```tsx
-import { h } from 'preact'
+import { h, Fragment } from 'preact'
 import { Router } from 'preact-router'
 import { Link } from 'preact-router/match'
 import { Cap } from 'preact-cap'
 
 export const Home = () => {
   return (
-    <Cap>
-      <title>Home</title>
-    </Cap>
-    <h1>Welcome</h1>
-    <Link href='/about'>About</Link>
-    <Link href='/ja'>Japanese</Link>
+    <>
+      <Cap>
+        <title>Home</title>
+      </Cap>
+      <h1>Welcome</h1>
+      <Link href='/about'>About</Link>
+      <Link href='/ja'>Japanese</Link>
+    </>
   )
 }
 
 export const About = () => {
   return (
-    <Cap>
-      <title>About</title>
-    </Cap>
-    <h1>About</h1>
-    <Link href='/'>Home</Link>
-    <Link href='/ja'>Japanese</Link>
+    <>
+      <Cap>
+        <title>About</title>
+      </Cap>
+      <h1>About</h1>
+      <Link href='/'>Home</Link>
+      <Link href='/ja'>Japanese</Link>
+    </>
   )
 }
 
 export const Japanese = () => {
   return (
-    <Cap lang='ja'>
-      <title>日本語</title>
-    </Cap>
-    <h1>日本語</h1>
-    <Link href='/'>Home</Link>
-    <Link href='/about'>About</Link>
+    <>
+      <Cap lang='ja'>
+        <title>日本語</title>
+      </Cap>
+      <h1>日本語</h1>
+      <Link href='/'>Home</Link>
+      <Link href='/about'>About</Link>
+    </>
   )
 }
 

@@ -25,7 +25,7 @@
   "rules": {
     "prettier/prettier": "error",
     "no-console": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^Fragment$", "argsIgnorePattern": "^_" }],
     "react/prop-types": "off"
   },
   "settings": {

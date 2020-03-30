@@ -216,14 +216,17 @@ export class Cap extends Component {
     return null
   }
 }
-/*
-// use custom hook with useReducer and useEffect
-export const Head = (props: VNode[]): VNode[] => {
-  return props
+
+interface RenderReturnType {
+  head: string
+  app: string
+}
+export const render = (vnode: preact.VNode): RenderReturnType => {
+  const head = '<title>Home</title>'
+  const app = renderToString(vnode)
+  return { head, app }
 }
 
-export const Cap = (props: VNode[]): null => {
-  props
+export const Cap2: preact.FunctionComponent = () => {
   return null
 }
-*/
