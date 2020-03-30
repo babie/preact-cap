@@ -105,6 +105,7 @@ app.listen(3000)
 <!doctype html>
 <html lang='en'>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script src='./index.js' defer />
   </head>
   <body>
@@ -151,6 +152,7 @@ export const html = ({ url: string }) => {
   return '<!doctype html>' + render(
     <Html lang='en'>
       <Head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <script src='./index.js' defer />
       </Head>
       <body>
