@@ -38,7 +38,7 @@ const attributeNames: AttributeNames = {
   acceptCharset: 'accept-charset',
   className: 'class',
   htmlFor: 'for',
-  httpEquiv: 'http-equiv'
+  httpEquiv: 'http-equiv',
 }
 
 const nodeToDOM = (node: OthersVNode): HTMLElement => {
@@ -187,7 +187,7 @@ export class Cap extends Component {
 
   public static toString(): string {
     return this.rewind()
-      .map(node => renderToString(node))
+      .map((node) => renderToString(node))
       .join('')
   }
 

@@ -68,7 +68,7 @@ describe('preact-cap', (): void => {
       <style key="style" className="preact-cap">
         {'p { color: red; }'}
       </style>,
-      <script key="script" className="preact-cap" src="main.js" defer />
+      <script key="script" className="preact-cap" src="main.js" defer />,
     ]
     const title = document.createElement('title')
     title.textContent = 'Default Title'
@@ -107,7 +107,7 @@ describe('preact-cap', (): void => {
         const titleNodes = [
           <title key="title1">Title1</title>,
           <title key="title2">Title2</title>,
-          <title key="title3">Title3</title>
+          <title key="title3">Title3</title>,
         ]
         updateTitle(titleNodes)
 
@@ -214,7 +214,7 @@ describe('preact-cap', (): void => {
         itemProp="description"
         content="this is a description"
       />,
-      <base key="base" href="http://localhost/" target="_self" />
+      <base key="base" href="http://localhost/" target="_self" />,
     ]
 
     it('when duplicated', (): void => {
@@ -236,7 +236,7 @@ describe('preact-cap', (): void => {
           itemProp="description"
           content="this is a duplicate description"
         />,
-        <base key="base" href="http://localhost/duplicated/" target="_self" />
+        <base key="base" href="http://localhost/duplicated/" target="_self" />,
       ])
       const actual = duplicated.filter(unique())
 
@@ -313,7 +313,7 @@ describe('preact-cap', (): void => {
           href="http://localhost/"
           target="_self"
           className="preact-cap"
-        />
+        />,
       ].sort(compare)
 
       const cap1 = (

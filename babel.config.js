@@ -4,18 +4,18 @@ const presets = [
     {
       targets: { node: 'current' },
       useBuiltIns: 'usage',
-      corejs: 3
-    }
+      corejs: 3,
+    },
   ],
   ['@babel/preset-typescript', { jsxPragma: 'h' }],
   [
     '@babel/preset-react',
     {
       pragma: 'h',
-      pragmaFrag: 'Fragment'
-    }
+      pragmaFrag: 'Fragment',
+    },
   ],
-  'power-assert'
+  'power-assert',
 ]
 const plugins = [
   [
@@ -24,9 +24,9 @@ const plugins = [
       scopeVariable: 'h',
       scopeVariableFrag: 'Fragment',
       source: 'preact',
-      isDefault: false
-    }
-  ]
+      isDefault: false,
+    },
+  ],
 ]
 
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
   env: {
     test: {
       presets: presets,
-      plugins: plugins
-    }
-  }
+      plugins: plugins,
+    },
+  },
 }
