@@ -223,6 +223,7 @@ interface RenderReturnType {
 }
 export const render = (vnode: preact.VNode): RenderReturnType => {
   const head = '<title>Home</title>'
+  document.title = 'Home'
   const app = renderToString(vnode)
   return { head, app }
 }

@@ -1,8 +1,13 @@
 import assert from 'power-assert'
 import { h, Fragment } from 'preact'
 import { Cap2, render } from '../src/index'
+import { JSDOM } from 'jsdom'
+
+declare const jsdom: JSDOM
 
 describe('small tests', (): void => {
+  jsdom.reconfigure({ url: 'https://example.com' })
+
   const Home: preact.FunctionComponent = () => {
     return (
       <>
@@ -46,13 +51,20 @@ describe('small tests', (): void => {
     )
   }
 */
-  it('render head title', (): void => {
-    const { head } = render(<Home />)
-    assert(head === '<title>Home</title>')
-  })
+  describe('render()', (): void => {
+    it('update title tag', (): void => {
+      const { head } = render(<Home />)
+      assert(head === '<title>Home</title>')
+    })
 
-  it('render app', (): void => {
-    const { app } = render(<Home />)
-    assert(app === '<h1>Welcome</h1>')
+    it('update document.title', (): void => {
+      render(<Home />)
+      assert(document.title === 'Home')
+    })
+
+    it('render app', (): void => {
+      const { app } = render(<Home />)
+      assert(app === '<h1>Welcome</h1>')
+    })
   })
 })
