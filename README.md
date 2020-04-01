@@ -78,7 +78,7 @@ export const App = ({ url: string }) => {
 
 ## 🎨 Server-Side Rendering
 
-`index.ts`:
+`index.tsx`:
 
 ```tsx
 import { hydrate } from 'preact'
@@ -86,7 +86,7 @@ import { App } from './App'
 
 const app = document.getElementById('app')
 if (app) {
-  hydrate(App, app)
+  hydrate(<App url={url} />, app)
 }
 ```
 
@@ -116,6 +116,7 @@ app.listen(3000)
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>App</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="./index.js" defer />
   </head>
@@ -125,21 +126,21 @@ app.listen(3000)
 </html>
 ```
 
-`html.ts`:
+`html.tsx`:
 
-```ts
+```tsx
 import { h } from 'preact'
 import { render } from 'preact-cap'
 import { App } from './App.tsx'
 
 export const html = ({ url: string }) => {
-  const { head, app } = render(App({ url }))
+  const { head, app } = render(<App url={url} />)
   return `
     <!DOCTYPE html>
     <html lang='en'>
       <head>
-        <script src='./index.js' defer />
         ${head}
+        <script src='./index.js' defer />
       </head>
       <body>
         <div id='app'>
