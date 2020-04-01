@@ -4,7 +4,7 @@
 
 `head`'s `title`, `meta`, `base`, `link`, `style`, `script` tags and `html`'s `lang` attributes are supported.
 
-## ☁️ Install
+## 🌩 Install
 
 ```shell
 $ npm install preact-cap
@@ -16,7 +16,7 @@ or
 $ yarn add preact-cap
 ```
 
-## ⛏ Usage
+## 🎸 Usage
 
 `App.tsx`:
 
@@ -76,7 +76,7 @@ export const App = ({ url: string }) => {
 }
 ```
 
-## Server-Side Rendering
+## 🎨 Server-Side Rendering
 
 `index.ts`:
 
