@@ -33,7 +33,6 @@ describe('small tests', (): void => {
     )
   }
 
-  /*
   const Japanese: preact.FunctionComponent = () => {
     return (
       <>
@@ -45,6 +44,7 @@ describe('small tests', (): void => {
     )
   }
 
+  /*
   const App: preact.FunctionComponent = ({ url: string }) => {
     return (
       <Router url={url}>
@@ -66,14 +66,35 @@ describe('small tests', (): void => {
       assert(head === '<title>About</title>')
     })
 
-    it('update document.title', (): void => {
+    it('update a document.title', (): void => {
       render(<Home />)
       assert(document.title === 'Home')
     })
 
-    it('update body', (): void => {
+    it('update an another document.title', (): void => {
+      render(<About />)
+      assert(document.title === 'About')
+    })
+
+    it('update a body', (): void => {
       const { app } = render(<Home />)
       assert(app === '<h1>Welcome</h1>')
+    })
+
+    it('update an another body', (): void => {
+      const { app } = render(<About />)
+      assert(app === '<h1>About</h1>')
+    })
+
+    it('does not update a html lang attribute', (): void => {
+      const expect = document.documentElement.lang
+      render(<Home />)
+      assert(document.documentElement.lang === expect)
+    })
+
+    it('update an another html lang attribute', (): void => {
+      render(<Japanese />)
+      assert(document.documentElement.lang === 'ja')
     })
   })
 })

@@ -294,7 +294,7 @@ export const Head: preact.FunctionComponent = () => {
     </head>
   )
 }
-export const Cap2: preact.FunctionComponent = (props) => {
+export const Cap2: preact.FunctionComponent<{ lang?: string }> = (props) => {
   const vnodes = toChildArray(
     props.children
   ).filter((child): child is preact.VNode => isVNode(child))
@@ -302,9 +302,15 @@ export const Cap2: preact.FunctionComponent = (props) => {
   const { state, dispatch } = useContext(CapContext)
   if (state.provided) {
     dispatch({ type: ADD_HEAD_TAGS, payload: vnodes })
+    if (props.lang) {
+      dispatch({ type: ADD_HTML_ATTRS, payload: { lang: props.lang } })
+    }
   } else {
     // TODO: Cap2 nest case
     updateHead(vnodes)
+    if (props.lang) {
+      document.documentElement.lang = props.lang
+    }
   }
 
   return null
