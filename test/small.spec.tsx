@@ -7,6 +7,9 @@ declare const jsdom: JSDOM
 
 describe('small tests', (): void => {
   jsdom.reconfigure({ url: 'https://example.com' })
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = ''
+  })
 
   const Home: preact.FunctionComponent = () => {
     return (
@@ -18,7 +21,7 @@ describe('small tests', (): void => {
       </>
     )
   }
-  /*
+
   const About: preact.FunctionComponent = () => {
     return (
       <>
@@ -30,6 +33,7 @@ describe('small tests', (): void => {
     )
   }
 
+  /*
   const Japanese: preact.FunctionComponent = () => {
     return (
       <>
@@ -52,9 +56,14 @@ describe('small tests', (): void => {
   }
 */
   describe('render()', (): void => {
-    it('update title tag', (): void => {
+    it('update a title tag', (): void => {
       const { head } = render(<Home />)
       assert(head === '<title>Home</title>')
+    })
+
+    it('update an another title tag', (): void => {
+      const { head } = render(<About />)
+      assert(head === '<title>About</title>')
     })
 
     it('update document.title', (): void => {
@@ -62,7 +71,7 @@ describe('small tests', (): void => {
       assert(document.title === 'Home')
     })
 
-    it('render app', (): void => {
+    it('update body', (): void => {
       const { app } = render(<Home />)
       assert(app === '<h1>Welcome</h1>')
     })

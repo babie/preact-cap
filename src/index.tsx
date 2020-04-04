@@ -1,4 +1,5 @@
-import { Component, cloneElement } from 'preact'
+import { h, Component, cloneElement, toChildArray, createContext } from 'preact'
+import { useContext, useReducer } from 'preact/hooks'
 import { render as renderToString } from 'preact-render-to-string'
 let caps: preact.Component[] = []
 
@@ -217,17 +218,101 @@ export class Cap extends Component {
   }
 }
 
-interface RenderReturnType {
+interface CapState {
+  provided: boolean
+  headTags: preact.VNode[]
+  htmlAttrs: {
+    lang: string
+  }
+}
+interface CapAction {
+  type: string
+  payload: preact.VNode[] | {}
+}
+const initialState: CapState = {
+  provided: false,
+  headTags: [],
+  htmlAttrs: { lang: 'en' },
+}
+const reducer = (
+  state: CapState = initialState,
+  action: CapAction
+): CapState => {
+  switch (action.type) {
+    case 'ADD_HEAD_TAGS':
+      return {
+        ...state,
+        headTags: [...state.headTags, ...(action.payload as preact.VNode[])],
+      }
+    case 'UPDATE_HTML_ATTRS':
+      return {
+        ...state,
+        htmlAttrs: { ...state.htmlAttrs, ...(action.payload as {}) },
+      }
+    default:
+      return state
+  }
+}
+interface CapValue {
+  state: CapState
+  dispatch: (action: CapAction) => void
+}
+const initialDispatch = (_action: CapAction): void => {
+  // nothing
+  return
+}
+const initialValue: CapValue = {
+  state: initialState,
+  dispatch: initialDispatch,
+}
+export const CapContext = createContext(initialValue)
+export const Html: preact.FunctionComponent<{ lang?: string }> = (props) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  if (props.lang !== undefined) {
+    dispatch({ type: 'ADD_HTML_ATTR', payload: { lang: props.lang } })
+  }
+  return (
+    <CapContext.Provider
+      value={{ state: { ...state, provided: true }, dispatch }}
+    >
+      <CapContext.Consumer>
+        {(value: CapValue): preact.ComponentChildren => (
+          <html lang={value.state.htmlAttrs.lang}>{props.children}</html>
+        )}
+      </CapContext.Consumer>
+    </CapContext.Provider>
+  )
+}
+export const Head: preact.FunctionComponent = () => {
+  return (
+    <head>
+      <CapContext.Consumer>
+        {(value: CapValue): preact.ComponentChildren => value.state.headTags}
+      </CapContext.Consumer>
+    </head>
+  )
+}
+export const Cap2: preact.FunctionComponent = (props) => {
+  const vnodes = toChildArray(
+    props.children
+  ).filter((child): child is preact.VNode => isVNode(child))
+
+  const { state, dispatch } = useContext(CapContext)
+  if (state.provided) {
+    dispatch({ type: 'ADD_HEAD_TAGS', payload: vnodes })
+  } else {
+    // TODO: Cap2 nest case
+    updateHead(vnodes)
+  }
+
+  return null
+}
+interface RenderReturn {
   head: string
   app: string
 }
-export const render = (vnode: preact.VNode): RenderReturnType => {
-  const head = '<title>Home</title>'
-  document.title = 'Home'
+export const render = (vnode: preact.VNode): RenderReturn => {
   const app = renderToString(vnode)
+  const head = document.head.innerHTML
   return { head, app }
-}
-
-export const Cap2: preact.FunctionComponent = () => {
-  return null
 }

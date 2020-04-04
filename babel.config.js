@@ -1,4 +1,5 @@
 const presets = [
+  ['@babel/preset-typescript', { jsxPragma: 'h' }],
   [
     '@babel/preset-env',
     {
@@ -7,7 +8,6 @@ const presets = [
       corejs: 3,
     },
   ],
-  ['@babel/preset-typescript', { jsxPragma: 'h' }],
   [
     '@babel/preset-react',
     {
