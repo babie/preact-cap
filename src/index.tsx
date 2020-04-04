@@ -269,7 +269,7 @@ export const CapContext = createContext(initialValue)
 export const Html: preact.FunctionComponent<{ lang?: string }> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   if (props.lang !== undefined) {
-    dispatch({ type: 'ADD_HTML_ATTR', payload: { lang: props.lang } })
+    dispatch({ type: 'ADD_HTML_ATTRS', payload: { lang: props.lang } })
   }
   return (
     <CapContext.Provider

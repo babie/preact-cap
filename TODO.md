@@ -10,6 +10,7 @@ Update head tags with JSX
 - [ ] Write Html tests  
 - [ ] Add Contributing to README.md  
 - [ ] Add badges to README.md  
+- [ ] Add jsdom to AppShell section on README.md  
 
 ### In Progress
 
