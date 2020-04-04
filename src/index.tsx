@@ -234,17 +234,19 @@ const initialState: CapState = {
   headTags: [],
   htmlAttrs: { lang: 'en' },
 }
+const ADD_HEAD_TAGS = 'ADD_HEAD_TAGS'
+const ADD_HTML_ATTRS = 'ADD_HTML_ATTRS'
 const reducer = (
   state: CapState = initialState,
   action: CapAction
 ): CapState => {
   switch (action.type) {
-    case 'ADD_HEAD_TAGS':
+    case ADD_HEAD_TAGS:
       return {
         ...state,
         headTags: [...state.headTags, ...(action.payload as preact.VNode[])],
       }
-    case 'UPDATE_HTML_ATTRS':
+    case ADD_HTML_ATTRS:
       return {
         ...state,
         htmlAttrs: { ...state.htmlAttrs, ...(action.payload as {}) },
@@ -269,7 +271,7 @@ export const CapContext = createContext(initialValue)
 export const Html: preact.FunctionComponent<{ lang?: string }> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   if (props.lang !== undefined) {
-    dispatch({ type: 'ADD_HTML_ATTRS', payload: { lang: props.lang } })
+    dispatch({ type: ADD_HTML_ATTRS, payload: { lang: props.lang } })
   }
   return (
     <CapContext.Provider
@@ -299,7 +301,7 @@ export const Cap2: preact.FunctionComponent = (props) => {
 
   const { state, dispatch } = useContext(CapContext)
   if (state.provided) {
-    dispatch({ type: 'ADD_HEAD_TAGS', payload: vnodes })
+    dispatch({ type: ADD_HEAD_TAGS, payload: vnodes })
   } else {
     // TODO: Cap2 nest case
     updateHead(vnodes)
