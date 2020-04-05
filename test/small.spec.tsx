@@ -7,6 +7,23 @@ declare const jsdom: JSDOM
 
 describe('small tests', (): void => {
   jsdom.reconfigure({ url: 'https://example.com' })
+
+  beforeEach(() => {
+    document.documentElement.lang = 'en'
+    document.head.innerHTML = `
+      <title>Default Title</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta content="width=device-width,initial-scale=1" name="viewport" />
+      <base href="https://example.com/" target="_self" />
+      <link href="main.css" rel="stylesheet" />
+      <style>p { color: red; }</style>
+      <script src="main.js" defer />
+    `.trim()
+    document.body.innerHTML = `
+      <div id="app">Please Enable JavaScript.</div>
+    `.trim()
+  })
+
   afterEach(() => {
     document.getElementsByTagName('html')[0].innerHTML = ''
   })
@@ -58,12 +75,12 @@ describe('small tests', (): void => {
   describe('render()', (): void => {
     it('update a title tag', (): void => {
       const { head } = render(<Home />)
-      assert(head === '<title>Home</title>')
+      assert.ok(new RegExp('<title>Home</title>').test(head))
     })
 
     it('update an another title tag', (): void => {
       const { head } = render(<About />)
-      assert(head === '<title>About</title>')
+      assert.ok(new RegExp('<title>About</title>').test(head))
     })
 
     it('update a document.title', (): void => {
@@ -87,9 +104,8 @@ describe('small tests', (): void => {
     })
 
     it('does not update a html lang attribute', (): void => {
-      const expect = document.documentElement.lang
       render(<Home />)
-      assert(document.documentElement.lang === expect)
+      assert(document.documentElement.lang === 'en')
     })
 
     it('update an another html lang attribute', (): void => {
