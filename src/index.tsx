@@ -1,5 +1,13 @@
-import { h, Component, cloneElement, toChildArray, createContext } from 'preact'
-import { useContext, useReducer } from 'preact/hooks'
+import {
+  h,
+  render as preactRender,
+  Component,
+  cloneElement,
+  toChildArray,
+  createContext,
+} from 'preact'
+import { useContext, useReducer, useEffect } from 'preact/hooks'
+import { act } from 'preact/test-utils'
 import { render as renderToString } from 'preact-render-to-string'
 let caps: preact.Component[] = []
 
@@ -307,10 +315,12 @@ export const Cap2: preact.FunctionComponent<{ lang?: string }> = (props) => {
     }
   } else {
     // TODO: Cap2 nest case
-    updateHead(vnodes)
-    if (props.lang) {
-      document.documentElement.lang = props.lang
-    }
+    useEffect(() => {
+      updateHead(vnodes)
+      if (props.lang) {
+        document.documentElement.lang = props.lang
+      }
+    })
   }
 
   return null
@@ -320,7 +330,11 @@ interface RenderReturn {
   app: string
 }
 export const render = (vnode: preact.VNode): RenderReturn => {
-  const app = renderToString(vnode)
+  const el = document.createElement('div')
+  act(() => {
+    preactRender(vnode, el)
+  })
+  const app = el.innerHTML
   const head = document.head.innerHTML
   return { head, app }
 }
