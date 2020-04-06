@@ -2,7 +2,7 @@
 
 &lt;head> updater for [Preact](https://github.com/preactjs/preact).
 
-`<head>`'s `title`, `meta`, `base`, `link`, `style`, `script` tags and `<html>`'s `lang` attributes are supported.
+`<head>`'s `<title>`, `<meta>`, `<base>`, `<link>`, `<style>`, `<script>` tags and `<html>`'s `lang` attributes are supported.
 
 ## 🌩 Install
 
